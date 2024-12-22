@@ -51,28 +51,29 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit} className="mb-3 flex flex-col gap-3">
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Item name"
-        className="border p-2 mr-2"
+        className="text-slate-900 border-[1px] border-slate-400 rounded-[3px] text-sm tracking-tight py-2 px-3 outline-none"
         required
       />
-      <input
+      <textarea
         type="text"
+        rows="6"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
-        className="border p-2 mr-2"
+        className="text-slate-900 border-[1px] border-slate-400 rounded-[3px] text-sm tracking-tight py-2 px-3 outline-none resize-none"
       />
       <input
         type="number"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
         placeholder="Price"
-        className="border p-2 mr-2"
+        className="text-slate-900 border-[1px] border-slate-400 rounded-[3px] text-sm tracking-tight py-2 px-3 outline-none"
         required
       />
 
@@ -80,7 +81,7 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="border p-2 mr-2"
+        className="text-slate-900 border-[1px] border-slate-400 rounded-[3px] text-sm tracking-tight py-2 px-3 outline-none"
         required
       >
         <option value="">Select Category</option>
@@ -92,9 +93,21 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
         {/* Add more categories as needed */}
       </select>
 
-      <button type="submit" className="bg-blue-500 text-white p-2">
-        {itemToEdit ? 'Update Item' : 'Add Item'}
-      </button>
+      <div className="flex gap-2 md:justify-end mt-4">
+        <button
+          type="submit"
+          className="bg-teal-500 text-white font-medium tracking-tight py-2 rounded-[3px] md:w-[120px] w-full hover:bg-teal-600 transition-all duration-200 ease-in-out"
+        >
+          {itemToEdit ? 'Update Item' : 'Add Item'}
+        </button>
+        <button
+          type="button" // Ensure this is a button to prevent form submission
+          onClick={closeModal}
+          className="tracking-tight border-[1px] font-medium  border-slate-400 text-slate-900 rounded-[3px] px-1 py-2 md:w-[120px] w-full hover:bg-slate-200 transition-all duration-200 ease-in-out"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };
