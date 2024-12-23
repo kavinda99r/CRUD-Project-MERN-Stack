@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ItemList from "../components/ItemList";
+import { Link } from "react-router-dom";
+import { IoHomeSharp } from "react-icons/io5";
+import { MdHome } from "react-icons/md";
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
@@ -7,7 +10,17 @@ const MainPage = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
 
   // Predefined list of categories
-  const categories = ["Electronics", "Clothing", "Books", "Toys", "Food"];
+  const categories = [
+    "Laptops",
+    "Laptop Accessories",
+    "Desktop Computers",
+    "Monitors",
+    "Graphics Card",
+    "Printer",
+    "Graphic Tab",
+    "Smart Phones",
+    "Other Accessories",
+  ];
 
   useEffect(() => {
     fetchItems();
@@ -52,14 +65,27 @@ const MainPage = () => {
 
   return (
     <div className=" w-full min-h-screen flex flex-col ">
+      <div className="flex items-center justify-between md:px-9 px-0 h-14 border-b-[1px] border-slate-300">
+        <div className="flex gap-2 pl-9">
+          <h1 className="text-xl font-bold">Logo</h1>
+        </div>
+        <div className="pr-9">
+          <Link to="/">
+            <button className="flex items-center gap-2 text-center text-2xl text-slate-900 font-medium px-2 py-2 rounded-[3px] hover:text-white hover:border-teal-500 hover:bg-teal-500 transition-all ease-in-out duration-300">
+            <MdHome />
+              
+            </button>
+          </Link>
+        </div>
+      </div>
       <div className="flex-grow md:px-9 px-0">
-        <div className="px-9 pt-9  py-3">
+        <div className="px-9 pt-5  py-3">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
             MERN <span className="text-teal-500">CRUD</span> Application
           </h1>
         </div>
 
-        <div className="gird md:flex px-9 gap-4 pt-3 pb-5  ">
+        <div className="gird md:flex px-9 gap-4 pt-2 pb-5  ">
           <div className="w-full md:w-1/5">
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
               Simplify and Optimize Data Management.
@@ -87,11 +113,11 @@ const MainPage = () => {
         </div>
 
         <div className="grid md:flex w-full px-9 gap-4 mb-5">
-          <div className=" w-full md:w-1/5 py-7 md:px-9 px-6  border-[1px] border-slate-300 rounded-[3px]">
+          <div className="w-full md:w-1/5 py-7 md:px-9 px-6 border-[1px] border-slate-300 rounded-[3px]">
             {/* Category checkboxes */}
             <div className="mb-4">
               <h3 className="text-xl font-bold mb-2 text-slate-900">Filter</h3>
-              <div className="flex flex-col gap-2 ml-5">
+              <div className="grid grid-cols-2 md:flex flex-col gap-2 px-2">
                 {categories.map((category) => (
                   <label
                     key={category}
@@ -115,14 +141,16 @@ const MainPage = () => {
 
             {/* Display messages */}
             {items.length === 0 && (
-              <p className="text-red-500">No items added yet.</p>
+              <p className="text-slate-500 text-center pt-7">
+                No items added yet.
+              </p>
             )}
             {items.length > 0 && filteredItems.length === 0 && (
-              <p className="text-red-500">
+              <p className="text-slate-500 text-center pt-7">
                 No items found
                 {searchQuery && ` for "${searchQuery}"`}
                 {selectedCategories.length > 0 &&
-                  ` in categories: ${selectedCategories.join(", ")}`}
+                  ` in ${selectedCategories.join(", ")}`}
                 .
               </p>
             )}
@@ -131,7 +159,9 @@ const MainPage = () => {
       </div>
 
       <div className="footer w-full">
-        <div className="h-14 bg-teal-800 text-teal-100 text-sm flex justify-center items-center"><p>&copy; 2024, Created by Kavinda Ravihansa</p></div>
+        <div className="h-14 bg-teal-800 text-teal-100 md:text-sm text-xs flex justify-center items-center">
+          <p>&copy; 2024, Designed and Developed by Kavinda Ravihansa</p>
+        </div>
       </div>
     </div>
   );

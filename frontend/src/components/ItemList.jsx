@@ -27,8 +27,8 @@ const ItemList = ({ items, fetchItems }) => {
 
   return (
     <div>
-      <div className="flex justify-between border-b-2 w-full mb-4  pb-3">
-        <h2 className="text-xl  font-bold text-slate-900 tracking-tight">
+      <div className="flex justify-between border-b-4 w-full mb-4 pb-3">
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">
           Items List
         </h2>
         <button
@@ -60,17 +60,31 @@ const ItemList = ({ items, fetchItems }) => {
       {/* Display items */}
       <ul>
         {items.map((item) => (
-          <li key={item._id} className="mb-2 flex flex-col ">
-            <span className="text-slate-900 font-bold text-lg md:flex  grid mb-1">
-              <span className="py-1 tracking-tight">{item.name}</span>
-              <span className="bg-teal-600 rounded-[3px] px-2 py-1  text-white md:ml-3 ml-0 tracking-wide">
-                ${item.price.toFixed(2)}
+          <li key={item._id} className="mb-2 flex flex-col border-b-2">
+            <span className="text-slate-900 font-bold text-xl md:flex grid mb-1 md:justify-between">
+              <span className="py-1 tracking-tight md:mb-0 mb-1">
+                {item.name}
+              </span>
+              <span className="border-[1px] border-slate-900 rounded-[3px] px-2 py-1 text-slate-900 md:ml-3 ml-0 w-fit md:mb-0 mb-1">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(item.price)}
               </span>
             </span>
             <span className="text-slate-800 font-semibold tracking-tight">
               {item.description}
             </span>
-            <span className="text-slate-600 text-sm">{item.category}</span>
+            <span className="text-slate-600 text-sm md:mb-0 mb-1">
+              {item.category}
+            </span>
+            <span className="text-base tracking-tight text-teal-500 font-semibold">
+              {item.availability === "In Stock" ? (
+                <span className="text-green-500">In Stock</span>
+              ) : (
+                <span className="text-red-500">Out of Stock</span>
+              )}
+            </span>
             <div className="flex gap-3 mt-3 mb-4">
               <button
                 onClick={() => handleEdit(item)} // Trigger edit
@@ -80,7 +94,7 @@ const ItemList = ({ items, fetchItems }) => {
               </button>
               <button
                 onClick={() => handleDelete(item._id)} // Trigger delete
-                className="tracking-tight  border-[1px] border-slate-400 text-slate-900 bg-slate-100 hover:border-red-500 hover:bg-red-500 hover:text-white rounded-[3px] px-1 py-1 w-[100px] transition-all duration-200 ease-in-out"
+                className="tracking-tight border-[1px] border-slate-400 text-slate-900 bg-slate-100 hover:border-red-500 hover:bg-red-500 hover:text-white rounded-[3px] px-1 py-1 w-[100px] transition-all duration-200 ease-in-out"
               >
                 Delete
               </button>
