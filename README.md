@@ -1,1 +1,1 @@
-# CRUD-Project
+# MERN Stack CRUD Project
