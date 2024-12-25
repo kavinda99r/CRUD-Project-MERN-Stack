@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');  // Add this import
+const cors = require('cors'); 
 const dotenv = require('dotenv');
 const itemRoutes = require('./routes/ItemRoutes');
 
 dotenv.config();
 
 const app = express();
-app.use(cors());  // Add this line to enable CORS
+app.use(cors()); 
 app.use(express.json());
 
 // MongoDB connection

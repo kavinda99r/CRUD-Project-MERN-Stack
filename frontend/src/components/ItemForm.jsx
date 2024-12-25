@@ -4,8 +4,8 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState(""); // State for category
-  const [availability, setAvailability] = useState(""); // State for availability
+  const [category, setCategory] = useState("");
+  const [availability, setAvailability] = useState("");
 
   // Set form values if an item is being edited
   useEffect(() => {
@@ -13,20 +13,21 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
       setName(itemToEdit.name);
       setDescription(itemToEdit.description);
       setPrice(itemToEdit.price);
-      setCategory(itemToEdit.category); // Set category if editing
-      setAvailability(itemToEdit.availability || ""); // Set availability if editing
+      setCategory(itemToEdit.category);
+      setAvailability(itemToEdit.availability || "");
     }
   }, [itemToEdit]);
 
+  // Handle adding and updating items
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newItem = {
       name,
       description,
-      price: parseFloat(price), // Ensure price is a number
-      category, // Add category to the item
-      availability, // Add availability to the item
+      price: parseFloat(price),
+      category,
+      availability,
     };
 
     if (itemToEdit) {
@@ -50,11 +51,12 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
     }
 
     fetchItems();
-    closeModal(); // Close modal after submission
+    closeModal();
   };
 
   return (
     <form onSubmit={handleSubmit} className="mb-3 flex flex-col gap-3">
+      {/* ======================================================================================= */}
       <input
         type="text"
         value={name}
@@ -64,7 +66,6 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
         required
       />
 
-      {/* Category selection */}
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
@@ -82,7 +83,7 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
         <option value="Smart Phones">Smart Phones</option>
         <option value="Other Accessories">Other Accessories</option>
       </select>
-      
+
       <textarea
         type="text"
         rows="6"
@@ -91,6 +92,7 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
         placeholder="Description"
         className="text-slate-900 border-[1px] border-slate-400 rounded-[3px] text-sm tracking-tight py-2 px-3 outline-none resize-none"
       />
+
       <input
         type="number"
         value={price}
@@ -100,9 +102,6 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
         required
       />
 
-      
-
-      {/* Availability selection */}
       <select
         value={availability}
         onChange={(e) => setAvailability(e.target.value)}
@@ -114,6 +113,7 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
         <option value="Out of Stock">Out of Stock</option>
       </select>
 
+      {/* ======================================================================================= */}
       <div className="flex gap-2 md:justify-end mt-4">
         <button
           type="submit"
@@ -122,7 +122,7 @@ const ItemForm = ({ fetchItems, closeModal, itemToEdit }) => {
           {itemToEdit ? "Update Item" : "Add Item"}
         </button>
         <button
-          type="button" // Ensure this is a button to prevent form submission
+          type="button"
           onClick={closeModal}
           className="tracking-tight border-[1px] font-medium  border-slate-400 text-slate-900 rounded-[3px] px-1 py-2 md:w-[120px] w-full hover:bg-slate-200 transition-all duration-200 ease-in-out"
         >

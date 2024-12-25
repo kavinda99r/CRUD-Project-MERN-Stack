@@ -1,17 +1,18 @@
-const express = require('express');
-const Item = require('../models/Item');
+const express = require("express");
+const Item = require("../models/Item");
 const router = express.Router();
 
 // Create an item
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { name, description, price, category } = req.body; // Destructure category
+    const { name, description, price, category, availability } = req.body;
 
     const newItem = new Item({
       name,
       description,
       price,
-      category,  // Ensure category is passed
+      category,
+      availability,
     });
 
     await newItem.save();
@@ -22,7 +23,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all items
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const items = await Item.find();
     res.json(items);
@@ -32,7 +33,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a single item by ID
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     res.json(item);
@@ -42,9 +43,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update an item
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const { name, description, price, category } = req.body; // Destructure category
+    const { name, description, price, category, availability } = req.body;
 
     const updatedItem = await Item.findByIdAndUpdate(
       req.params.id,
@@ -52,9 +53,10 @@ router.put('/:id', async (req, res) => {
         name,
         description,
         price,
-        category,  // Update the category
+        category,
+        availability,
       },
-      { new: true }  // Return the updated item
+      { new: true }
     );
 
     res.json(updatedItem);
@@ -64,7 +66,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete an item
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await Item.findByIdAndDelete(req.params.id);
     res.status(204).end();

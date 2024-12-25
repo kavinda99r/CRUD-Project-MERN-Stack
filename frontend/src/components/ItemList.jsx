@@ -1,44 +1,64 @@
 import React, { useState } from "react";
 import ItemForm from "./ItemForm";
+import { LiaClipboardListSolid } from "react-icons/lia";
 
 const ItemList = ({ items, fetchItems }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
-  const [editingItem, setEditingItem] = useState(null); // Track which item is being edited
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [deletePopup, setDeletePopup] = useState({
+    visible: false,
+    itemId: null,
+  });
 
   // Handle item deletion
   const handleDelete = async (id) => {
     await fetch(`http://localhost:5000/api/items/${id}`, {
       method: "DELETE",
     });
-    fetchItems(); // Fetch updated items after deletion
+    fetchItems();
+    setDeletePopup({ visible: false, itemId: null });
+  };
+
+  // Open delete confirmation popup
+  const confirmDelete = (itemId) => {
+    setDeletePopup({ visible: true, itemId });
+  };
+
+  // Close delete confirmation popup
+  const closeDeletePopup = () => {
+    setDeletePopup({ visible: false, itemId: null });
   };
 
   // Handle edit button click
   const handleEdit = (item) => {
     setEditingItem(item);
-    setIsModalOpen(true); // Open modal when editing
+    setIsModalOpen(true);
   };
 
   // Handle opening the modal for adding new items
   const openAddItemModal = () => {
-    setEditingItem(null); // No item is being edited
-    setIsModalOpen(true); // Open modal for adding new item
+    setEditingItem(null);
+    setIsModalOpen(true);
   };
 
   return (
     <div>
       <div className="flex justify-between border-b-4 w-full mb-4 pb-3">
-        <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-          Items List
+        {/* ======================================================================================= */}
+        {/* Title Section with Add Item Button */}
+        <h2 className="flex items-center text-xl font-bold text-slate-900 tracking-tight">
+          <LiaClipboardListSolid />
+          <span className="ml-2">Items List</span>
         </h2>
         <button
-          onClick={openAddItemModal} // Open modal for adding new item
+          onClick={openAddItemModal}
           className="tracking-tight font-medium bg-teal-500 text-white px-5 py-2 rounded-[3px] hover:bg-teal-600 transition-all duration-200 ease-in-out"
         >
           Add Item
         </button>
       </div>
 
+      {/* ======================================================================================= */}
       {/* Modal for Add/Edit */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
@@ -46,17 +66,16 @@ const ItemList = ({ items, fetchItems }) => {
             <h3 className="text-xl text-slate-900 font-bold tracking-tight mb-4">
               {editingItem ? "Edit Item" : "Add Item"}
             </h3>
-
-            {/* Pass fetchItems and closeModal to ItemForm */}
             <ItemForm
               fetchItems={fetchItems}
-              closeModal={() => setIsModalOpen(false)} // Close modal function
-              itemToEdit={editingItem} // Pass the item being edited
+              closeModal={() => setIsModalOpen(false)}
+              itemToEdit={editingItem}
             />
           </div>
         </div>
       )}
 
+      {/* ======================================================================================= */}
       {/* Display items */}
       <ul>
         {items.map((item) => (
@@ -75,9 +94,6 @@ const ItemList = ({ items, fetchItems }) => {
             <span className="text-slate-800 font-semibold tracking-tight">
               {item.description}
             </span>
-            <span className="text-slate-600 text-sm md:mb-0 mb-1">
-              {item.category}
-            </span>
             <span className="text-base tracking-tight text-teal-500 font-semibold">
               {item.availability === "In Stock" ? (
                 <span className="text-green-500">In Stock</span>
@@ -85,15 +101,19 @@ const ItemList = ({ items, fetchItems }) => {
                 <span className="text-red-500">Out of Stock</span>
               )}
             </span>
+            <span className="text-slate-600 text-xs md:mb-0 mb-1">
+              {item.category}
+            </span>
+
             <div className="flex gap-3 mt-3 mb-4">
               <button
-                onClick={() => handleEdit(item)} // Trigger edit
+                onClick={() => handleEdit(item)}
                 className="tracking-tight border-[1px] border-slate-400 text-slate-900 rounded-[3px] px-1 py-1 w-[100px] hover:bg-slate-200 transition-all duration-200 ease-in-out"
               >
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(item._id)} // Trigger delete
+                onClick={() => confirmDelete(item._id)}
                 className="tracking-tight border-[1px] border-slate-400 text-slate-900 bg-slate-100 hover:border-red-500 hover:bg-red-500 hover:text-white rounded-[3px] px-1 py-1 w-[100px] transition-all duration-200 ease-in-out"
               >
                 Delete
@@ -102,6 +122,32 @@ const ItemList = ({ items, fetchItems }) => {
           </li>
         ))}
       </ul>
+
+      {/* ======================================================================================= */}
+      {/* Delete Confirmation Toast */}
+      {deletePopup.visible && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-[4px] shadow-lg w-[300px] text-center">
+            <p className="text-slate-900 font-medium text-lg mb-4">
+              Are you sure you want to delete this item?
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => handleDelete(deletePopup.itemId)}
+                className="bg-red-500 text-white px-4 w-[100px] py-2 rounded-[3px] hover:bg-red-600 transition-all duration-200"
+              >
+                Yes
+              </button>
+              <button
+                onClick={closeDeletePopup}
+                className="bg-gray-300 text-slate-900 px-4 w-[100px] py-2 rounded-[3px] hover:bg-gray-400 transition-all duration-200"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

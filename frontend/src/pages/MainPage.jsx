@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ItemList from "../components/ItemList";
 import { Link } from "react-router-dom";
-import { IoHomeSharp } from "react-icons/io5";
 import { MdHome } from "react-icons/md";
+import Image from "../assets/Logo.png";
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  // Predefined list of categories
+  // list of categories
   const categories = [
     "Laptops",
     "Laptop Accessories",
@@ -42,10 +42,8 @@ const MainPage = () => {
     const category = e.target.value;
 
     if (e.target.checked) {
-      // Add category to selectedCategories if checked
       setSelectedCategories((prev) => [...prev, category]);
     } else {
-      // Remove category if unchecked
       setSelectedCategories((prev) => prev.filter((cat) => cat !== category));
     }
   };
@@ -65,22 +63,29 @@ const MainPage = () => {
 
   return (
     <div className=" w-full min-h-screen flex flex-col ">
+      {/* ======================================================================================= */}
+      {/* Navigation Bar */}
       <div className="flex items-center justify-between md:px-9 px-0 h-14 border-b-[1px] border-slate-300">
-        <div className="flex gap-2 pl-9">
-          <h1 className="text-xl font-bold">Logo</h1>
+        <div className="flex items-center gap-2 pl-9">
+          <img src={Image} alt="" className="h-6 w-6" />
+          <h1 className="text-xl font-bold">
+            MERN <span className="text-teal-500">CRUD</span>
+          </h1>
         </div>
         <div className="pr-9">
           <Link to="/">
             <button className="flex items-center gap-2 text-center text-2xl text-slate-900 font-medium px-2 py-2 rounded-[3px] hover:text-white hover:border-teal-500 hover:bg-teal-500 transition-all ease-in-out duration-300">
-            <MdHome />
-              
+              <MdHome />
             </button>
           </Link>
         </div>
       </div>
+
+      {/* ======================================================================================= */}
+      {/* Main Section */}
       <div className="flex-grow md:px-9 px-0">
-        <div className="px-9 pt-5  py-3">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+        <div className="px-9 pt-4  py-3">
+          <h1 className="text-4xl font-bold tracking-tight text-slate-900">
             MERN <span className="text-teal-500">CRUD</span> Application
           </h1>
         </div>
@@ -94,13 +99,16 @@ const MainPage = () => {
           <div className="w-full md:w-4/5  ">
             <div>
               <h1 className="text-base font-medium text-slate-800  tracking-tight mb-4">
-                A comprehensive platform to efficiently handle Create, Read,
-                Update, and Delete operations with an intuitive interface,
-                robust backend, and seamless integration across the MERN stack.
+                A powerful platform designed to effortlessly manage Create,
+                Read, Update, and Delete operations with a user-friendly
+                interface, a robust backend, and seamless integration across the
+                MERN stack, ensuring optimal performance and scalability for
+                your data management needs.
               </h1>
             </div>
+
+            {/* Search Section */}
             <div>
-              {/* Search input field */}
               <input
                 type="text"
                 value={searchQuery}
@@ -158,6 +166,8 @@ const MainPage = () => {
         </div>
       </div>
 
+      {/* ======================================================================================= */}
+      {/* Footer */}
       <div className="footer w-full">
         <div className="h-14 bg-teal-800 text-teal-100 md:text-sm text-xs flex justify-center items-center">
           <p>&copy; 2024, Designed and Developed by Kavinda Ravihansa</p>
