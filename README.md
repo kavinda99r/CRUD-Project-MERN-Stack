@@ -22,9 +22,8 @@ MERN CRUD Application is a full-stack web application built with the MERN Stack 
 - Add authentication and role-based access control.
 - Enhance filtering with multiple criteria.
 
-<br>
-----------------------
-<br>
-Happy Coding! 🎉 
-<br>
-----------------------
+<h2> </h2>
+
+<h3>Happy Coding! 🎉</h3>
+
+---
