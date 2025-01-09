@@ -1,1 +1,1 @@
-# MERN Stack CRUD Project
+# MERN CRUD Application - CRUD Project using MERN Stack
