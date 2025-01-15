@@ -13,8 +13,8 @@ MERN CRUD Application is a full-stack web application built with the MERN Stack 
 
 <h3>Tech Stack 🛠️</h3>
 
-- Frontend: ReactJS with Tailwind CSS
-- Backend: Node.js with ExpressJS
+- Frontend: ReactJS, Tailwind CSS
+- Backend: Node.js, ExpressJS
 - Database: MongoDB
 
 <h3>Future Enhancements 🚀</h3>
